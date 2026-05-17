@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-body: "Manrope", sans-serif;
+    --color-primary: #4e6143;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #667a5a;
+    --color-on-primary-container: #f8ffee;
+    --color-primary-fixed: #d3e9c2;
+    --color-on-primary-fixed: #0f2007;
+    --color-secondary-container: #dae3d0;
+    --color-on-secondary-container: #5d6556;
+    --color-tertiary: #755163;
+    --color-tertiary-fixed: #ffd8e8;
+    --color-on-tertiary-fixed: #2e1221;
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+    --color-surface: #f9faf8;
+    --color-on-surface: #191c1b;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f3f4f2;
+    --color-surface-container: #edeeec;
+    --color-surface-container-high: #e7e8e6;
+    --color-surface-container-highest: #e1e3e1;
+    --color-on-surface-variant: #444840;
+    --color-outline-variant: #c4c8bd;
+}
+
+@layer base {
+    body {
+        @apply bg-surface font-body text-on-surface antialiased;
+    }
+
+    input,
+    select,
+    textarea {
+        @apply outline-none;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+}

@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: consultorio_app
+    restart: unless-stopped
+    working_dir: /var/www
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    volumes:
+      - ./:/var/www
+    ports:
+      - "8001:8000"
+      - "5174:5173"
+    depends_on:
+      - mysql
+    networks:
+      - consultorio
+
+  mysql:
+    image: mysql:8.4
+    container_name: consultorio_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: consultorio
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: password
+      MYSQL_USER: consultorio
+    ports:
+      - "3307:3306"
+    volumes:
+      - consultorio_mysql_data:/var/lib/mysql
+    networks:
+      - consultorio
+
+networks:
+  consultorio:
+
+volumes:
+  consultorio_mysql_data:
