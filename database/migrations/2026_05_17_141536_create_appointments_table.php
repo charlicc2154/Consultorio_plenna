@@ -17,7 +17,7 @@ return new class extends Migration
             $table->time('start_time');
             $table->time('end_time')->nullable();
             $table->string('reason')->nullable();
-            $table->enum('status', ['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'])->default('scheduled')->index();
+            $table->enum('status', ['scheduled', 'confirmed', 'completed', 'served', 'cancelled', 'no_show'])->default('scheduled')->index();
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -9,6 +9,7 @@ const navItems: Array<{ id: Tab; icon: string; label: string }> = [
     { id: 'dashboard', icon: 'dashboard', label: 'Dashboard' },
     { id: 'patients', icon: 'group', label: 'Pacientes' },
     { id: 'appointments', icon: 'event', label: 'Citas' },
+    { id: 'payments', icon: 'payments', label: 'Pagos' },
     { id: 'clinicalHistories', icon: 'history_edu', label: 'Historias' },
     { id: 'adminUsers', icon: 'admin_panel_settings', label: 'Administradores' },
 ];

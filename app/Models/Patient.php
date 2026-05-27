@@ -55,4 +55,9 @@ class Patient extends Model
     {
         return $this->hasMany(ClinicalHistory::class);
     }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

@@ -47,4 +47,24 @@ class Clinic extends Model
     {
         return $this->hasMany(ClinicalHistory::class);
     }
+
+    public function services(): HasMany
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function paymentItems(): HasMany
+    {
+        return $this->hasMany(PaymentItem::class);
+    }
+
+    public function paymentTransactions(): HasMany
+    {
+        return $this->hasMany(PaymentTransaction::class);
+    }
 }

@@ -30,7 +30,7 @@ class StoreAppointmentRequest extends FormRequest
             ],
             'end_time' => ['nullable', 'date_format:H:i', 'after:start_time'],
             'reason' => ['nullable', 'string', 'max:255'],
-            'status' => ['sometimes', Rule::in(['scheduled', 'confirmed', 'completed', 'cancelled', 'no_show'])],
+            'status' => ['sometimes', Rule::in(['scheduled', 'confirmed', 'completed', 'served', 'cancelled', 'no_show'])],
             'notes' => ['nullable', 'string'],
         ];
     }

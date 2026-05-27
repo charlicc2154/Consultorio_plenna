@@ -9,12 +9,14 @@ import { DashboardPage } from './pages/DashboardPage';
 import { LoginPage } from './pages/LoginPage';
 import { PatientsPage } from './pages/PatientsPage';
 import { AdminUsersPage } from './pages/AdminUsersPage';
-import type { AdminUser, Appointment, ClinicalHistory, Clinic, Patient, Tab } from './types';
+import { PaymentsPage } from './pages/PaymentsPage';
+import type { AdminUser, Appointment, ClinicalHistory, Clinic, Patient, Payment, Service, Tab } from './types';
 
 const titles: Record<Tab, string> = {
     dashboard: 'Turno del día',
     patients: 'Gestión de Pacientes',
     appointments: 'Agenda Médica',
+    payments: 'Pagos y Servicios',
     clinicalHistories: 'Historias Clínicas',
     adminUsers: 'Usuarios Administradores',
 };
@@ -27,6 +29,8 @@ export function App() {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [clinicalHistories, setClinicalHistories] = useState<ClinicalHistory[]>([]);
     const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
+    const [services, setServices] = useState<Service[]>([]);
+    const [payments, setPayments] = useState<Payment[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -37,18 +41,22 @@ export function App() {
         setLoading(true);
         setError(null);
         try {
-            const [clinicResponse, patientResponse, appointmentResponse, historyResponse, adminResponse] = await Promise.all([
+            const [clinicResponse, patientResponse, appointmentResponse, historyResponse, adminResponse, serviceResponse, paymentResponse] = await Promise.all([
                 api.clinics(),
                 api.patients(),
                 api.appointments(),
                 api.clinicalHistories(),
                 api.adminUsers(),
+                api.services(),
+                api.payments(),
             ]);
             setClinics(clinicResponse.data);
             setPatients(patientResponse.data.data);
             setAppointments(appointmentResponse.data.data);
             setClinicalHistories(historyResponse.data.data);
             setAdminUsers(adminResponse.data.data);
+            setServices(serviceResponse.data.data);
+            setPayments(paymentResponse.data.data);
         } catch (caught) {
             setError(caught instanceof Error ? caught.message : 'No se pudo cargar la información.');
         } finally {
@@ -93,11 +101,10 @@ export function App() {
                         >
                             {activeTab === 'dashboard' && (
                                 <DashboardPage
-                                    patients={patients}
                                     appointments={appointments}
-                                    clinicalHistories={clinicalHistories}
                                     onCreateAppointment={() => setActiveTab('appointments')}
                                     onCreatePatient={() => setActiveTab('patients')}
+                                    reload={loadData}
                                 />
                             )}
                             {activeTab === 'patients' && (
@@ -109,6 +116,17 @@ export function App() {
                                     patients={patients}
                                     adminUsers={adminUsers}
                                     appointments={appointments}
+                                    reload={loadData}
+                                />
+                            )}
+                            {activeTab === 'payments' && (
+                                <PaymentsPage
+                                    clinicId={clinicId}
+                                    adminUsers={adminUsers}
+                                    appointments={appointments}
+                                    patients={patients}
+                                    payments={payments}
+                                    services={services}
                                     reload={loadData}
                                 />
                             )}
@@ -134,6 +152,7 @@ export function App() {
                 {[
                     ['dashboard', 'home', 'Inicio'],
                     ['appointments', 'event', 'Agenda'],
+                    ['payments', 'payments', 'Pagos'],
                     ['patients', 'group', 'Pacientes'],
                     ['adminUsers', 'admin_panel_settings', 'Admins'],
                 ].map(([tab, icon, label]) => (

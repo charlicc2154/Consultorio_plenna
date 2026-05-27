@@ -75,6 +75,7 @@ export function AppointmentsPage({ clinicId, patients, adminUsers, appointments,
                             <option value="scheduled">Programada</option>
                             <option value="confirmed">Confirmada</option>
                             <option value="completed">Completada</option>
+                            <option value="served">Atendida</option>
                             <option value="cancelled">Cancelada</option>
                             <option value="no_show">No asistió</option>
                         </SelectField>

@@ -57,4 +57,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(ClinicalHistory::class);
     }
+
+    public function createdPayments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'created_by');
+    }
+
+    public function receivedPaymentTransactions(): HasMany
+    {
+        return $this->hasMany(PaymentTransaction::class, 'received_by');
+    }
 }

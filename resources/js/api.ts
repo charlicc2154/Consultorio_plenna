@@ -1,4 +1,4 @@
-import type { AdminUser, ApiEnvelope, Appointment, ClinicalHistory, Clinic, Paginated, Patient } from './types';
+import type { AdminUser, ApiEnvelope, Appointment, ClinicalHistory, Clinic, Paginated, Patient, Payment, PaymentTransaction, Service } from './types';
 
 async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
     const response = await fetch(url, {
@@ -64,5 +64,20 @@ export const api = {
     },
     async createAdminUser(payload: Partial<AdminUser> & { password: string }) {
         return request<ApiEnvelope<AdminUser>>('/api/admin-users', toBody(payload));
+    },
+    async services() {
+        return request<ApiEnvelope<Paginated<Service>>>('/api/services');
+    },
+    async createService(payload: Partial<Service>) {
+        return request<ApiEnvelope<Service>>('/api/services', toBody(payload));
+    },
+    async payments() {
+        return request<ApiEnvelope<Paginated<Payment>>>('/api/payments');
+    },
+    async createPayment(payload: unknown) {
+        return request<ApiEnvelope<Payment>>('/api/payments', toBody(payload));
+    },
+    async createPaymentTransaction(payload: Partial<PaymentTransaction>) {
+        return request<ApiEnvelope<PaymentTransaction>>('/api/payment-transactions', toBody(payload));
     },
 };

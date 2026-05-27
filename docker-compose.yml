@@ -11,9 +11,25 @@ services:
       - ./:/var/www
     ports:
       - "8001:8000"
-      - "5174:5173"
     depends_on:
       - mysql
+    networks:
+      - consultorio
+
+  vite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: consultorio_vite
+    restart: unless-stopped
+    working_dir: /var/www
+    command: npm run dev -- --host 0.0.0.0
+    volumes:
+      - ./:/var/www
+    ports:
+      - "5174:5173"
+    depends_on:
+      - app
     networks:
       - consultorio
 
