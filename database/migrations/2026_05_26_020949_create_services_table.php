@@ -25,6 +25,17 @@ return new class extends Migration
             $table->index('clinic_id');
         });
 
+        if (!DB::table('clinics')->exists()) {
+            DB::table('clinics')->insert([
+                [
+                    'name' => 'Clínica Principal',
+                    'status' => 'active',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        }
+
         DB::table('services')->insert([
             [
                 'clinic_id' => 1,
